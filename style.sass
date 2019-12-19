@@ -1,0 +1,170 @@
+$dark: #6b5b95
+$bright: #feb236
+$red: #d64161
+$orange: #ff7b25
+%main-border
+    border: .3em solid black
+    
+*
+    font-family: 'Lilita One', cursive
+    font-size: calc(0.7em + 1vh)
+    box-sizing: border-box
+
+body 
+    padding: 0
+    margin: 0
+    background: $bright
+
+::selection
+    background: none
+    
+.wrapper
+    width: 100%
+    padding: 2em
+    
+
+.main-header
+    margin: .5em auto
+    width: fit-content
+    display: block
+    padding: .4em
+    text-transform: uppercase
+    letter-spacing: .2em
+    text-align: center
+
+.main-field
+    > *
+        margin: 0 auto
+        width: fit-content
+
+.score
+    font-size: 2rem
+    padding: 0.3em
+    text-transform: uppercase
+    color: $dark
+
+.points
+    color: $red
+
+.play-field
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+    height: 60vh
+    width: 70%
+    border: .4em solid $red
+    background: $orange
+
+.target
+    display: block
+    width: 4em
+    height: 4em
+    background: $red
+    border: none
+
+.target:focus
+    outline: none
+
+.target--ingame
+    color: white
+    border: .3em solid black
+    
+.target--ingame:hover
+    cursor: pointer
+
+.target--ingame:active
+    background: $orange
+    border: none
+
+.target-motion
+    position: absolute
+    animation-name: target-level-1
+    animation-duration: 15s
+    animation-iteration-count: infinite
+    animation-timing-function: linear
+
+.target--small
+    width: 2em
+    height: 2em
+    background: tomato
+
+.start-btn
+    display: block
+    text-transform: uppercase
+    font-size: 2rem
+    padding: .6em 2em
+    background: $dark
+    margin-top: .5em
+    @extend %main-border
+
+
+.start-btn:focus
+    outline: none
+
+.start-btn:hover 
+    cursor: pointer
+    color: $orange
+
+.start-btn:active
+    transform: translateY(.2em)
+
+@keyframes target-level-1
+    0%
+        top: 0
+        left: 50%
+        transform: translateX(-1.5em)
+    15%
+        top: 50%
+    30%
+        left: 25%
+    50%
+        left: 60%
+    75%
+        top: 25%
+        left: 50%
+    100%
+        top: 0
+        left: 50%
+        transform: translateX(-1.5em)
+    
+@keyframes target-level-2
+    0%
+        top: 50%
+        left: 50%
+        transform: translateX(-1.5em)
+    15%
+        left: 80%
+        top: 10%
+    30%
+        left: 30%
+        top: 75%
+    50% 
+        left: 80%
+        top: 10%
+    60%
+        left: 15%
+        top: 10%
+    80%
+        left: 90%
+        top: 80%
+    90%
+        left: 30%
+    100%
+        top: 50%
+        left: 50%
+        transform: translateX(-1.5em)
+
+@media (max-width: 1000px)
+    .wrapper
+        padding: 1em
+    .play-field
+        width: 90%
+    .start-btn
+        padding: .3em 1em
+    .target
+        width: 3em
+        height: 3em
+    .target--small
+        width: 1.5em
+        height: 1.5em
