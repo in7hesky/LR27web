@@ -82,6 +82,15 @@ body {
   background: #ff7b25;
 }
 
+.play-field--collapse {
+  -webkit-animation-name: collapse;
+          animation-name: collapse;
+  -webkit-animation-duration: 6s;
+          animation-duration: 6s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
 .countdown {
   position: absolute;
   text-transform: uppercase;
@@ -197,6 +206,35 @@ body {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+.cracken-alert {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  -webkit-animation-duration: 6s;
+          animation-duration: 6s;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #6b5b95;
+  color: white;
+  opacity: 0;
+  z-index: -2;
+}
+
+.cracken-shout {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: .2em;
 }
 
 @-webkit-keyframes target-level-1 {
@@ -330,6 +368,186 @@ body {
     left: 50%;
     -webkit-transform: translateX(-1.5em);
             transform: translateX(-1.5em);
+  }
+}
+
+@-webkit-keyframes collapse {
+  0% {
+  }
+  40% {
+    -webkit-transform: scale(0.3);
+            transform: scale(0.3);
+  }
+  70% {
+    background: white;
+  }
+  80% {
+    background: #6b5b95;
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  90% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  100% {
+    -webkit-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+    background: white;
+  }
+}
+
+@keyframes collapse {
+  0% {
+  }
+  40% {
+    -webkit-transform: scale(0.3);
+            transform: scale(0.3);
+  }
+  70% {
+    background: white;
+  }
+  80% {
+    background: #6b5b95;
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  90% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  100% {
+    -webkit-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+    background: white;
+  }
+}
+
+@-webkit-keyframes boss-background {
+  0% {
+    background: #ff7b25;
+  }
+  25% {
+    background: #ff7b25;
+  }
+  26% {
+    border-color: black;
+    background: #d64161;
+  }
+  50% {
+    border-color: black;
+    background: #d64161;
+  }
+  51% {
+    background: #feb236;
+  }
+  75% {
+    background: #feb236;
+  }
+  76% {
+    background: 'tomato';
+  }
+  100% {
+    background: 'tomato';
+  }
+}
+
+@keyframes boss-background {
+  0% {
+    background: #ff7b25;
+  }
+  25% {
+    background: #ff7b25;
+  }
+  26% {
+    border-color: black;
+    background: #d64161;
+  }
+  50% {
+    border-color: black;
+    background: #d64161;
+  }
+  51% {
+    background: #feb236;
+  }
+  75% {
+    background: #feb236;
+  }
+  76% {
+    background: 'tomato';
+  }
+  100% {
+    background: 'tomato';
+  }
+}
+
+@-webkit-keyframes cracken-shout {
+  20% {
+    color: white;
+    background: #6b5b95;
+  }
+  40% {
+    color: #6b5b95;
+    background: white;
+  }
+  55% {
+    color: white;
+    background: #6b5b95;
+  }
+  70% {
+    color: #6b5b95;
+    background: white;
+  }
+  78% {
+    color: white;
+    background: #6b5b95;
+  }
+  86% {
+    color: #6b5b95;
+    background: white;
+  }
+  95% {
+    background: black;
+    color: white;
+  }
+  100% {
+    background: white;
+    color: black;
+  }
+}
+
+@keyframes cracken-shout {
+  20% {
+    color: white;
+    background: #6b5b95;
+  }
+  40% {
+    color: #6b5b95;
+    background: white;
+  }
+  55% {
+    color: white;
+    background: #6b5b95;
+  }
+  70% {
+    color: #6b5b95;
+    background: white;
+  }
+  78% {
+    color: white;
+    background: #6b5b95;
+  }
+  86% {
+    color: #6b5b95;
+    background: white;
+  }
+  95% {
+    background: black;
+    color: white;
+  }
+  100% {
+    background: white;
+    color: black;
   }
 }
 

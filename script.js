@@ -1,11 +1,12 @@
 $(function() {
     $('.start-btn').click(function(event) {
         event.target.style.visibility = "hidden"
-        $('.main-header').html("Difficulty: <span class='difficulty-level'>1</span>")
+        $('.main-header').html(`Difficulty: <span class='difficulty-level'>${levelTracker.levelNames[0]}</span>`)
         startEvents()
     })
 
     function startEvents() {
+        
         let start = playfield.targetStart.bind(playfield)
         setTimeout(() => start(), 4700)
 
@@ -31,84 +32,44 @@ $(function() {
 
     let playfield = {
         targetObj: $(".target"),
-        pointsObj: $('.points'),
-        score: 0,
-        speed: 15,
         clicks: 0,
 
         targetStart() {
             timer.start()
             $(".clicks").show()
             this.targetObj.addClass("target-motion target--ingame")
-            this.targetObj.mousedown(() => {
-                this.incrementLevel()
-            })
-            $(".play-field").click(() => {
+            $(".play-field").mousedown(() => {
                 this.incrementClicks()
             })
+            this.targetObj.mousedown(() => {
+                levelTracker.incrementLevel()
+            })
+            
         },
 
         incrementClicks() {
-            if (this.clicks == 0) {
+            this.clicks++
+            if (this.clicks == 1) {
                 this.offsetOfBar = document.querySelector(".clicks__amount").offsetWidth
                 this.widthToRemove = document.querySelector(".clicks__amount").offsetWidth / 20
             }
-            this.clicks++
             document.querySelector(".clicks__amount").style.width = this.offsetOfBar - this.widthToRemove * this.clicks + 'px'
 
             if (this.clicks == 10) {
                 document.querySelector(".clicks__amount").style.backgroundColor = '#ff7b25'
             }    
+            console.log(this.clicks)
             if (this.clicks == 20) {
                 document.querySelector(".clicks").style.color = '#ff7b25'
                 this.fail()
             }
             
-            
-        },
-
-        incrementLevel() {
-            this.score++
-            this.pointsObj.text(`${this.score}`)
-            if (this.score == 5) {
-                this.raiseDifficulty(2)
-            } else if (this.score == 10) {
-                this.raiseDifficulty(3)
-            } else if (this.score == 15) {
-                this.win()
-            } else {
-                this.addSpeed()
-            }
-        },
-
-        addSpeed() {
-            this.speed = Math.round(this.speed * 0.93 * 100) / 100
-            console.log(this.speed)
-            document.querySelector(".target-motion").style.animationDuration = `${this.speed}s`
-        },
-
-        raiseDifficulty(level) {
-            if (level == 2) {
-                document.querySelector(".target-motion").style.animationName = "target-level-2"
-                this.targetObj.addClass("target--small")
-            } else if (level == 3) {
-                this.showTargetInterval = setInterval(() => {
-                    let targetNode = document.querySelector(".target")
-                    if (targetNode.style.opacity == "0") {
-                        targetNode.style.opacity = '1'
-                    } else {
-                        targetNode.style.opacity = "0"
-                    }
-                }, 500)
-            }
-            
-            $(".difficulty-level").text(`${level}`)
-            
         },
 
         finish() {
             timer.stop()
-            clearInterval(this.showTargetInterval)
+            clearInterval(levelTracker.showTargetInterval)
+            clearInterval(levelTracker.showCrackenInterval)
             $(".play-field").unbind()   
         },
 
@@ -125,6 +86,7 @@ $(function() {
         fail() {
             this.finish()
 
+            document.querySelector(".play-field").style.animation = 'none'
             $(".play-field").html("<div class='result'>Failed</div>")
             $(".play-field").css({
                 background: 'tomato'
@@ -133,11 +95,112 @@ $(function() {
         }
     }
 
+    let levelTracker = {
+        levelNames: ['easy', 'medium', 'hard', 'nightmare'],
+        score: 0,
+        speed: 15,
+        pointsObj: $('.points'),
+
+        incrementLevel() {
+            this.score++
+            this.pointsObj.text(`${this.score}`)
+            if (this.score == 5) {
+                this.raiseDifficulty(2)
+            } else if (this.score == 10) {
+                this.addSpeed()
+                this.raiseDifficulty(3)
+            } else if (this.score == 14) {
+                if (playfield.clicks != 19) {
+                    console.log(playfield.clicks)
+                    this.raiseDifficulty(4)
+                }
+                
+            }
+              else if (this.score == 15) {
+                document.querySelector(".play-field").style.animation = "none"
+                playfield.win()
+            } else {
+                this.addSpeed()
+            }
+        },
+
+        addSpeed() {
+            this.speed = Math.round(this.speed * 0.93 * 100) / 100
+            //console.log(this.speed)
+            document.querySelector(".target-motion").style.animationDuration = `${this.speed}s`
+        },
+
+        raiseDifficulty(level) {
+            if (level == 2) {
+                document.querySelector(".target-motion").style.animationName = "target-level-2"
+                $('.target').addClass("target--small")
+            } else if (level == 3) {
+                this.showTargetInterval = setInterval(() => {
+                    let targetNode = document.querySelector(".target")
+                    if (targetNode.style.opacity == "0") {
+                        targetNode.style.opacity = '1'
+                    } else {
+                        targetNode.style.opacity = "0"
+                    }
+                }, 500)
+            } else if (level == 4) {
+                this.releaseCutscene()
+            }
+            
+            $(".difficulty-level").text(`${this.levelNames[level - 1]}`)
+            
+        },
+
+        releaseCutscene() {
+            timer.stop()
+            $('.play-field').off()
+
+            document.querySelector(".target").style.visibility = 'hidden'
+            $(".play-field").addClass("play-field--collapse")
+            setTimeout(() => {
+                document.querySelector(".cracken-alert").style.opacity = '1'
+                document.querySelector(".cracken-alert").style.animationName = 'cracken-shout'
+                setTimeout(() => {
+                    document.querySelector('.cracken-alert').style.opacity = '0'
+                    document.querySelector('.play-field').style.animation = 'boss-background 4s steps(1) infinite'
+                    this.releaseCracken()
+                }, 8500)
+            }, 8000)
+        },
+
+        releaseCracken() {
+            timer.start()
+            $(".play-field").mousedown(() => {
+                playfield.incrementClicks()
+            })
+
+            document.querySelector(".target").style.visibility = 'visible'
+            let cracken = document.querySelector(".target").cloneNode()
+            cracken.style.animationDirection = 'alternate-reverse'
+            
+            this.showCrackenInterval = setInterval(() => {
+                if (cracken.style.opacity == "0") {
+                    if (cracken.style.backgroundColor == 'tomato') {
+                        cracken.style.backgroundColor = 'yellow'
+                    } else {
+                        cracken.style.backgroundColor = 'tomato'
+                    }
+                    cracken.style.opacity = '1'
+                } else {
+                    cracken.style.opacity = "0"
+                }
+            }, 500)
+            document.querySelector(".play-field").appendChild(cracken)
+        }
+    }
+
     let timer = {
         seconds: 0,
 
         start() {
-            this.interval = setInterval(() => this.seconds++, 1000)
+            this.interval = setInterval(() => {
+                this.seconds++
+                }, 1000)
         },
 
         stop() {
