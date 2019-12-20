@@ -6,7 +6,7 @@ $(function() {
     })
 
     function startEvents() {
-        let start = aim.targetStart.bind(aim)
+        let start = playfield.targetStart.bind(playfield)
         setTimeout(() => start(), 4700)
 
         let counter = 3
@@ -29,7 +29,7 @@ $(function() {
     }
 
 
-    let aim = {
+    let playfield = {
         targetObj: $(".target"),
         pointsObj: $('.points'),
         score: 0,
@@ -129,7 +129,6 @@ $(function() {
             $(".play-field").css({
                 background: 'tomato'
             })
-
 
         }
     }
