@@ -20,7 +20,6 @@ body
     
 .wrapper
     width: 100%
-    padding: 2em
     
 
 .main-header
@@ -32,6 +31,9 @@ body
     letter-spacing: .2em
     text-align: center
 
+.difficulty-level
+    color: $dark
+
 .main-field
     > *
         margin: 0 auto
@@ -39,7 +41,7 @@ body
 
 .score
     font-size: 2rem
-    padding: 0.3em
+    padding: .3em
     text-transform: uppercase
     color: $dark
 
@@ -56,6 +58,19 @@ body
     border: .4em solid $red
     background: $orange
 
+.countdown
+    position: absolute
+    text-transform: uppercase
+    width: 100%
+    height: 100%
+    z-index: 2
+    background: greenyellow
+    font-size: 12rem
+    display: flex
+    align-items: center
+    justify-content: center
+    opacity: 0
+
 .target
     display: block
     width: 4em
@@ -67,7 +82,6 @@ body
     outline: none
 
 .target--ingame
-    color: white
     border: .3em solid black
     
 .target--ingame:hover
@@ -92,10 +106,10 @@ body
 .start-btn
     display: block
     text-transform: uppercase
-    font-size: 2rem
-    padding: .6em 2em
+    font-size: 1.7rem
+    padding: .4em 1.5em
     background: $dark
-    margin-top: .5em
+    margin-top: .4em
     @extend %main-border
 
 
@@ -109,6 +123,31 @@ body
 .start-btn:active
     transform: translateY(.2em)
 
+.result 
+    font-size: 4rem
+    text-transform: uppercase
+    text-align: center
+
+.clicks
+    text-align: center
+    text-transform: uppercase
+    color: $dark
+    display: none
+    position: relative
+    bottom: 2em
+
+.clicks-wrapper
+    width: 6em
+    height: 1em
+    border: .3em solid black
+    display: block
+
+.clicks__amount
+    background-color: #73C500
+    display: block
+    height: 100%
+    width: 100%
+
 @keyframes target-level-1
     0%
         top: 0
@@ -116,13 +155,14 @@ body
         transform: translateX(-1.5em)
     15%
         top: 50%
+        left: 75%
     30%
         left: 25%
     50%
-        left: 60%
+        left: 70%
     75%
         top: 25%
-        left: 50%
+        left: 30%
     100%
         top: 0
         left: 50%
@@ -168,3 +208,8 @@ body
     .target--small
         width: 1.5em
         height: 1.5em
+    .result
+        font-size: 2rem
+    .countdown
+        font-size: 8rem 
+    
